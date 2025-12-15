@@ -3,7 +3,6 @@ from yt_dlp import YoutubeDL
 import tkinter 
 import customtkinter as ct
 from tkinter import filedialog
-
 ct.set_appearance_mode('system')
 
 ct.set_default_color_theme('blue')
@@ -11,6 +10,17 @@ app =ct.CTk()
 app.title('YooTube_110')
 app.geometry('700x400')
 
+
+def checkInvalidlink(func):
+    def wrapper():
+        if 'https' not in enter1.get():
+            title2.configure(text='Invalid link please try again!')
+            return 
+        else:
+            return func()
+    return wrapper
+
+@checkInvalidlink
 def download_audio():
     link = enter1.get()
     #selcete floder to download init 
@@ -34,8 +44,9 @@ def c ():
     title1.configure(text='download onther one')
     enter1.delete(0,'end')
 
+
+@checkInvalidlink
 def startdownload():
-    
     yt_dlp_link = enter1.get()
     if not yt_dlp_link.strip():
         flabel.configure(text="Error: The URL cannot be empty." ,text_color='red')
